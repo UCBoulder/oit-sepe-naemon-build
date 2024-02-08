@@ -9,7 +9,7 @@ jobs:
 
     - name: build RPM package
       id: rpm
-      uses: naveenrajm7/rpmbuild@master
+      uses: grindsa/rpmbuild@alma9
       with:
         spec_file: "merlin.spec"
 
