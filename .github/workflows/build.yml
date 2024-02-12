@@ -12,6 +12,7 @@ jobs:
       uses: grindsa/rpmbuild@alma9
       with:
         spec_file: "merlin.spec"
+        additional_repos: '["epel-release"]'
 
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
