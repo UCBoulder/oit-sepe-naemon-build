@@ -38,7 +38,7 @@ Requires: libsodium
 Requires: systemd
 BuildRequires: libsodium-devel
 BuildRequires: mariadb-devel
-BuildRequires: naemon-devel
+BuildRequires: naemon-devel < 1.4.2
 BuildRequires: python2
 BuildRequires: gperf
 BuildRequires: check-devel
@@ -58,7 +58,7 @@ Summary: Slim version of the merlin daemon
 Requires: libaio
 Requires: merlin-apps-slim >= %version
 Requires: glib2
-BuildRequires: naemon-devel
+BuildRequires: naemon-devel < 1.4.2
 BuildRequires: python2
 BuildRequires: gperf
 BuildRequires: check-devel
