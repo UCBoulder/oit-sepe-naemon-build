@@ -15,6 +15,8 @@
 %define operator_group mon_operators
 %define naemon_confdir %_sysconfdir/naemon/
 
+%undefine _disable_source_fetch
+
 Summary: The merlin daemon is a multiplexing event-transport program
 Name: merlin
 Version: 2022.06.02
