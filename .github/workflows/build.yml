@@ -12,7 +12,7 @@ jobs:
       uses: UCBoulder/oit-sepe-rpmbuild@master
       with:
         spec_file: "merlin.spec"
-        additional_repos: '["epel-release"]'
+        additional_repos: '["epel-release", "https://labs.consol.de/repo/stable/rhel8/x86_64/labs-consol-stable.rhel8.noarch.rpm"]'
 
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
