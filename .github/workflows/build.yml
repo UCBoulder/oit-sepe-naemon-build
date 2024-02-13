@@ -5,7 +5,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - name: build RPM package
       id: rpm
@@ -13,18 +13,6 @@ jobs:
       with:
         spec_file: "merlin.spec"
         additional_repos: '["epel-release", "https://labs.consol.de/repo/stable/rhel8/x86_64/labs-consol-stable.rhel8.noarch.rpm"]'
-
-    - name: print test log
-      if: failure()
-      run: tree /github/home/rpmbuild/BUILD
-
-    - name: print test log
-      if: failure()
-      run: tree /var/tmp
-
-    - name: print test log
-      if: failure()
-      run: cat /var/tmp/**/test-suite.log
 
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
