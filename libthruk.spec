@@ -9,7 +9,7 @@ Group: Applications/System
 URL: http://www.thruk.org/
 Packager: Sven Nierlein <sven.nierlein@consol.de>
 Vendor: Labs Consol
-Source0: https://download.thruk.org/pkg/v%{version}/src/Thruk-%{version}.tar.gz
+Source0: https://download.thruk.org/pkg/v%{version}/src/thruk-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}
 BuildRequires: gd-devel > 1.8
 BuildRequires: zlib-devel
