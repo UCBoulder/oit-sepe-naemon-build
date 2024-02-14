@@ -106,7 +106,7 @@ Naemon.
 
 
 %prep
-%setup -q -n naemon-%{version}
+%setup -q -n naemon-core-%{version}
 
 %build
 test -f configure || ./autogen.sh
