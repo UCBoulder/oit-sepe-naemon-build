@@ -78,7 +78,7 @@ all of the original features plus adds additional enhancements for
 large installations.
 
 %prep
-%setup -q
+%setup -q -n thruk-%{version}
 
 %build
 %{__make}
