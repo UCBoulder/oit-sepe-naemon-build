@@ -7,8 +7,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: build RPM package
-      id: rpm
+    - name: build Merlin package
+      id: merlin
       uses: UCBoulder/oit-sepe-rpmbuild@master
       with:
         spec_file: "merlin.spec"
@@ -18,4 +18,4 @@ jobs:
       uses: actions/upload-artifact@v1.0.0
       with:
         name: Binary RPM
-        path: ${{ steps.rpm.outputs.rpm_dir_path }}
+        path: ${{ steps.merlin.outputs.rpm_dir_path }}
