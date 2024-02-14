@@ -38,6 +38,52 @@ jobs:
         name: Naemon RPMs
         path: ${{ steps.build.outputs.rpm_dir_path }}
 
+  build-naemon-livestatus:
+    runs-on: ubuntu-latest
+    needs: build-naemon-core
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/download-artifact@v4
+      with:
+        name: Naemon Core RPMs
+
+    - name: build Naemon Livestatus packages
+      id: build
+      uses: UCBoulder/oit-sepe-rpmbuild@master
+      with:
+        spec_file: "naemon-livestatus.spec"
+        additional_repos: '["epel-release", "/github/workspace/x86_64/libnaemon-1.4.1-0.x86_64.rpm", "/github/workspace/x86_64/naemon-devel-1.4.1-0.x86_64.rpm"]'
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Naemon Livestatus RPMs
+        path: ${{ steps.build.outputs.rpm_dir_path }}
+
+  build-naemon-vimvault:
+    runs-on: ubuntu-latest
+    needs: build-naemon-core
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/download-artifact@v4
+      with:
+        name: Naemon Core RPMs
+
+    - name: build Naemon Vimvault packages
+      id: build
+      uses: UCBoulder/oit-sepe-rpmbuild@master
+      with:
+        spec_file: "naemon-vimvault.spec"
+        additional_repos: '["epel-release", "/github/workspace/x86_64/libnaemon-1.4.1-0.x86_64.rpm", "/github/workspace/x86_64/naemon-devel-1.4.1-0.x86_64.rpm"]'
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Naemon Vimvault RPMs
+        path: ${{ steps.build.outputs.rpm_dir_path }}
+
   build-merlin:
     runs-on: ubuntu-latest
     needs: build-naemon-core
