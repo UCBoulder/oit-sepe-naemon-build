@@ -20,7 +20,7 @@ Group: Applications/System
 URL: https://www.naemon.io/
 Packager: Naemon Core Development Team <naemon-dev@monitoring-lists.org>
 Vendor: Naemon Core Development Team
-Source0: http://labs.consol.de/naemon/download/%{name}-%{version}.tar.gz
+Source0: https://github.com/naemon/naemon/archive/refs/tags/v%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}
 %if %{defined suse_version}
 BuildRequires: apache2
