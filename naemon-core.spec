@@ -1,5 +1,7 @@
 %define logmsg logger -t naemon/rpm
 
+%undefine _disable_source_fetch
+
 Summary: Open Source Host, Service And Network Monitoring Program
 Name: naemon-core
 Version: 1.4.2
@@ -9,7 +11,7 @@ Group: Applications/System
 URL: https://www.naemon.io/
 Packager: Naemon Core Development Team <naemon-dev@monitoring-lists.org>
 Vendor: Naemon Core Development Team
-Source0: naemon-%{version}.tar.gz
+Source0: https://github.com/naemon/naemon-core/archive/refs/tags/v%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}
 BuildRequires: gperf
 BuildRequires: logrotate
