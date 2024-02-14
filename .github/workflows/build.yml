@@ -58,7 +58,7 @@ jobs:
 
   build-merlin:
     runs-on: ubuntu-latest
-    needs: build-naemon
+    needs: build-naemon-core
     steps:
     - uses: actions/checkout@v4
 
