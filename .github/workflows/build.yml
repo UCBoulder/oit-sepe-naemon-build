@@ -43,3 +43,17 @@ jobs:
         name: Merlin RPMs
         path: ${{ steps.merlin.outputs.rpm_dir_path }}
 
+  publish-rpms:
+    runs-on: ubuntu-latest
+    needs:
+      - build-naemon
+      - build-merlin
+    steps:
+    - uses: actions/download-artifact@v4
+      with:
+        merge-multiple: True
+    - uses: ncipollo/release-action@v1
+      with:
+        artifacts: 'x86_64/*'
+        commit: ${{ github.sha }}
+
