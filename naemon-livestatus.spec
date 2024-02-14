@@ -9,7 +9,7 @@ Group: Applications/System
 URL: https://www.naemon.io/
 Packager: Naemon Core Development Team <naemon-dev@monitoring-lists.org>
 Vendor: Naemon Core Development Team
-Source0: http://labs.consol.de/naemon/download/naemon-livestatus-%{version}.tar.gz
+Source0: https://github.com/naemon/naemon-livestatus/archive/refs/tags/v%{version}.tar.gz
 BuildRoot: %{_tmppath}/naemon-%{version}-%{release}
 BuildRequires: naemon-devel
 BuildRequires: autoconf

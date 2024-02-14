@@ -154,6 +154,8 @@ jobs:
     needs:
       - build-naemon-core
       - build-naemon
+      - build-naemon-livestatus
+      - build-naemon-vimvault
       - build-libthruk
       - build-thruk
       - build-merlin
@@ -161,6 +163,7 @@ jobs:
     - uses: actions/download-artifact@v4
       with:
         merge-multiple: True
+
     - uses: ncipollo/release-action@v1
       with:
         artifacts: 'x86_64/*'
