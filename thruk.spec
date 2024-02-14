@@ -18,7 +18,7 @@ Packager:      Sven Nierlein <sven.nierlein@consol.de>
 Vendor:        Labs Consol
 URL:           http://thruk.org
 %define fullname %{name}-%{version}
-Source0:       https://download.thruk.org/pkg/v%{version}/src/Thruk-%{version}.tar.gz
+Source0:       https://download.thruk.org/pkg/v%{version}/src/thruk-%{version}.tar.gz
 BuildRoot:     %{_tmppath}/%{name}-%{version}-%{release}
 Group:         Applications/Monitoring
 BuildRequires: autoconf, automake, perl, patch
