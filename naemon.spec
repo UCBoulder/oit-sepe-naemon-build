@@ -8,6 +8,8 @@
 %define apachedir httpd
 %endif
 
+%undefine _disable_source_fetch
+
 Summary: Open Source Host, Service And Network Monitoring Program
 Name: naemon
 Version: 1.4.1
