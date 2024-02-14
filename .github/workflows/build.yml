@@ -2,7 +2,7 @@ name: RPM Build
 on: push
 
 jobs:
-  build:
+  build-naemon:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -13,6 +13,17 @@ jobs:
       with:
         spec_file: "naemon-core.spec"
         additional_repos: '["epel-release"]'
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: Naemon RPMs
+        path: ${{ steps.naemon.outputs.rpm_dir_path }}
+
+  build-merlin:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
 
     - name: build Merlin packages
       id: merlin
@@ -27,8 +38,3 @@ jobs:
         name: Merlin RPMs
         path: ${{ steps.merlin.outputs.rpm_dir_path }}
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v1.0.0
-      with:
-        name: Naemon RPMs
-        path: ${{ steps.naemon.outputs.rpm_dir_path }}
