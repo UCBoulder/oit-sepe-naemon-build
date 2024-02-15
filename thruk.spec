@@ -106,7 +106,7 @@ This package contains the reporting addon for thruk useful for sla
 and event reporting.
 
 %prep
-%setup -q -n %{fullname}
+%setup -q -n Thruk-%{version}
 
 %build
 export PERL5LIB=/usr/lib/thruk/perl5:/usr/lib64/thruk/perl5
