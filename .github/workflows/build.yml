@@ -166,5 +166,5 @@ jobs:
 
     - uses: ncipollo/release-action@v1
       with:
-        artifacts: 'x86_64/*'
+        artifacts: "'x86_64/*','noarch/*'"
 
