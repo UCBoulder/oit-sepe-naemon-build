@@ -153,6 +153,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Download Source Tarball
+      run: |
+        mkdir -p ~/rpmbuild/SOURCES
+        curl -L https://github.com/pnp4nagios/pnp4nagios/archive/refs/tags/v0.6.27.tar.gz -o ~/rpmbuild/SOURCES/pnp4nagios-0.6.27.tgz
+
     - name: build PNP4Nagios packages
       id: build
       uses: UCBoulder/oit-sepe-rpmbuild@master
