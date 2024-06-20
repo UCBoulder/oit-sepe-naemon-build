@@ -58,7 +58,7 @@ Summary: Slim version of the merlin daemon
 Requires: libaio
 Requires: merlin-apps-slim >= %version
 Requires: glib2
-BuildRequires: naemon-devel < 1.4.2
+BuildRequires: naemon-devel
 BuildRequires: python2
 BuildRequires: gperf
 BuildRequires: check-devel
