@@ -53,7 +53,7 @@ jobs:
       uses: UCBoulder/oit-sepe-rpmbuild@master
       with:
         spec_file: "naemon-livestatus.spec"
-        additional_repos: '["epel-release", "/github/workspace/x86_64/libnaemon-1.4.1-0.x86_64.rpm", "/github/workspace/x86_64/naemon-devel-1.4.1-0.x86_64.rpm"]'
+        additional_repos: '["epel-release", "/github/workspace/x86_64/libnaemon-1.4.2-0.x86_64.rpm", "/github/workspace/x86_64/naemon-devel-1.4.2-0.x86_64.rpm"]'
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
@@ -76,7 +76,7 @@ jobs:
       uses: UCBoulder/oit-sepe-rpmbuild@master
       with:
         spec_file: "naemon-vimvault.spec"
-        additional_repos: '["epel-release", "/github/workspace/x86_64/libnaemon-1.4.1-0.x86_64.rpm", "/github/workspace/x86_64/naemon-devel-1.4.1-0.x86_64.rpm"]'
+        additional_repos: '["epel-release", "/github/workspace/x86_64/libnaemon-1.4.2-0.x86_64.rpm", "/github/workspace/x86_64/naemon-devel-1.4.2-0.x86_64.rpm"]'
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
@@ -99,7 +99,7 @@ jobs:
       uses: UCBoulder/oit-sepe-rpmbuild@master
       with:
         spec_file: "merlin.spec"
-        additional_repos: '["epel-release", "/github/workspace/x86_64/libnaemon-1.4.1-0.x86_64.rpm", "/github/workspace/x86_64/naemon-devel-1.4.1-0.x86_64.rpm"]'
+        additional_repos: '["epel-release", "/github/workspace/x86_64/libnaemon-1.4.2-0.x86_64.rpm", "/github/workspace/x86_64/naemon-devel-1.4.2-0.x86_64.rpm"]'
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
