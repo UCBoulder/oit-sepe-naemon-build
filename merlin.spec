@@ -38,7 +38,7 @@ Requires: libsodium
 Requires: systemd
 BuildRequires: libsodium-devel
 BuildRequires: mariadb-devel
-BuildRequires: naemon-devel < 1.4.2
+BuildRequires: naemon-devel
 BuildRequires: python2
 BuildRequires: gperf
 BuildRequires: check-devel
