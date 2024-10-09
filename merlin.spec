@@ -24,7 +24,7 @@ Release: 0
 License: GPLv2
 URL: https://github.com/ITRS-Group/monitor-merlin/
 Source0: https://github.com/ITRS-Group/monitor-merlin/archive/refs/tags/v%{version}.tar.gz
-BuildRoot: %{_tmppath}/monitor-%{name}-naemon-%{version}
+BuildRoot: %{_tmppath}/monitor-%{name}-%{version}
 Requires: libaio
 Requires: merlin-apps >= %version
 Requires: monitor-merlin
