@@ -161,7 +161,7 @@ management and allround tasks regarding administering a distributed
 network monitoring setup.
 
 %prep
-%setup -q -n monitor-%{name}-naemon-%{version}
+%setup -q -n monitor-%{name}-%{version}
 
 %build
 echo %{version} > .version_number
