@@ -19,7 +19,7 @@
 
 Summary: The merlin daemon is a multiplexing event-transport program
 Name: merlin
-Version: 2022.06.02
+Version: 2024.09.10
 Release: 0
 License: GPLv2
 URL: https://github.com/ITRS-Group/monitor-merlin/
@@ -38,7 +38,7 @@ Requires: libsodium
 Requires: systemd
 BuildRequires: libsodium-devel
 BuildRequires: mariadb-devel
-BuildRequires: naemon-devel < 1.4.2
+BuildRequires: naemon-devel
 BuildRequires: python2
 BuildRequires: gperf
 BuildRequires: check-devel
@@ -58,7 +58,7 @@ Summary: Slim version of the merlin daemon
 Requires: libaio
 Requires: merlin-apps-slim >= %version
 Requires: glib2
-BuildRequires: naemon-devel < 1.4.2
+BuildRequires: naemon-devel
 BuildRequires: python2
 BuildRequires: gperf
 BuildRequires: check-devel
