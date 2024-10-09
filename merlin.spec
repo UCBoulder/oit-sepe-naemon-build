@@ -19,11 +19,11 @@
 
 Summary: The merlin daemon is a multiplexing event-transport program
 Name: merlin
-Version: 1.4.2
+Version: 2024.09.10
 Release: 0
 License: GPLv2
 URL: https://github.com/ITRS-Group/monitor-merlin/
-Source0: https://github.com/dirtyren/monitor-merlin/archive/refs/heads/naemon-%{version}.tar.gz
+Source0: https://github.com/ITRS-Group/monitor-merlin/archive/refs/tags/v%{version}.tar.gz
 BuildRoot: %{_tmppath}/monitor-%{name}-naemon-%{version}
 Requires: libaio
 Requires: merlin-apps >= %version
