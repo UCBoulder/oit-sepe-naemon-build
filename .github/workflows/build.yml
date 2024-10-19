@@ -216,7 +216,10 @@ jobs:
       with:
         merge-multiple: true
 
+    - name: List all files before release
+      run: ls -R .
+
     - uses: ncipollo/release-action@v1
       with:
-        artifacts: 'x86_64/*,noarch/*'
+        artifacts: 'x86_64/*,noarch/*,*'
 
