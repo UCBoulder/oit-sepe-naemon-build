@@ -2,6 +2,9 @@
 %global with_selinux 1
 %global _libdir      %{_prefix}/lib64
 
+# Needed to enable source downloads
+%undefine _disable_source_fetch
+
 Name:           pnp4nagios
 Version:        0.6.27
 Release:        1%{?dist}
