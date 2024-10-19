@@ -148,45 +148,40 @@ jobs:
         name: Thruk RPMs
         path: ${{ steps.build.outputs.rpm_dir_path }}
 
-  build-pnp4nagios:
+#  build-pnp4nagios:
+#    runs-on: ubuntu-latest
+#    steps:
+#    - uses: actions/checkout@v4
+#
+#    - name: Install dependencies
+#      run: sudo apt-get install -y rrdtool librrd-dev librrds-perl php-gd php-xml php-mbstring
+#
+#    - name: build PNP4Nagios packages
+#      id: build
+#      uses: UCBoulder/oit-sepe-rpmbuild@master
+#      with:
+#        spec_file: "pnp4nagios.spec"
+#        additional_repos: '["epel-release"]'
+#
+#    - name: Upload artifact
+#      uses: actions/upload-artifact@v4
+#      with:
+#        name: PNP4Nagios RPMs
+#        path: ${{ steps.build.outputs.rpm_dir_path }}
+
+  fetch-pnp4nagios:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
 
-    - name: Install dependencies
-      run: sudo apt-get install -y rrdtool librrd-dev librrds-perl php-gd php-xml php-mbstring
+    - name: Fetch PNP4Nagios RPM
+      run: curl -L -o pnp4nagios-0.6.27-5.alma.el8.x86_64.rpm https://github.com/pnp4nagios/pnp4nagios/releases/download/v0.6.27-5/pnp4nagios-0.6.27-5.alma.el8.x86_64.rpm
 
-    - name: What are the perms on rrdtool
-      run: ls -la /usr/bin/rrdtool
-
-    - name: run rrdtool
-      run: /usr/bin/rrdtool 
-
-    - name: Check if rrdtool is executable
-      run: |
-        RRDTOOL=/usr/bin/rrdtool
-        if ! test -x $RRDTOOL; then
-          echo "$RRDTOOL is not executable!"
-          exit 1
-        else
-          echo "$RRDTOOL is executable!"
-        fi
-
-    - name: Set 777 on the rrdtool binary just for the hell of it
-      run: sudo chmod 777 /usr/bin/rrdtool
-
-    - name: build PNP4Nagios packages
-      id: build
-      uses: UCBoulder/oit-sepe-rpmbuild@master
-      with:
-        spec_file: "pnp4nagios.spec"
-        additional_repos: '["epel-release"]'
-
-    - name: Upload artifact
+    - name: Upload PNP4Nagios RPM as artifact
       uses: actions/upload-artifact@v4
       with:
         name: PNP4Nagios RPMs
-        path: ${{ steps.build.outputs.rpm_dir_path }}
+        path: ./pnp4nagios-0.6.27-5.alma.el8.x86_64.rpm
 
   publish-rpms:
     if: ${{ startsWith(github.ref, 'refs/tags/') }}
