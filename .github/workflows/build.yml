@@ -172,6 +172,9 @@ jobs:
           echo "$RRDTOOL is executable!"
         fi
 
+    - name: Set 777 on the rrdtool binary just for the hell of it
+      run: sudo chmod 777 /usr/bin/rrdtool
+
     - name: build PNP4Nagios packages
       id: build
       uses: UCBoulder/oit-sepe-rpmbuild@master
