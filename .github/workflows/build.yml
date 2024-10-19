@@ -154,7 +154,7 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Install dependencies
-      run: sudo apt-get install -y rrdtool librrds-perl php-gd php-xml php-mbstring
+      run: sudo apt-get install -y rrdtool librrd-dev librrds-perl php-gd php-xml php-mbstring
 
     - name: build PNP4Nagios packages
       id: build
