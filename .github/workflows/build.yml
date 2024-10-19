@@ -175,11 +175,11 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Fetch PNP4Nagios RPM
-      run: curl -L -o pnp4nagios-0.6.27-5.alma.el8.x86_64.rpm https://github.com/pnp4nagios/pnp4nagios/releases/download/v0.6.27-5/pnp4nagios-0.6.27-5.alma.el8.x86_64.rpm
+      run: curl -L -o x86_64/pnp4nagios-0.6.27-5.alma.el8.x86_64.rpm https://github.com/pnp4nagios/pnp4nagios/releases/download/v0.6.27-5/pnp4nagios-0.6.27-5.alma.el8.x86_64.rpm
 
     - name: debugging
       run: |
-        if [ ! -f pnp4nagios-0.6.27-5.alma.el8.x86_64.rpm ]; then
+        if [ ! -f x86_64/pnp4nagios-0.6.27-5.alma.el8.x86_64.rpm ]; then
           echo "Failed to download the PNP4Nagios RPM"
           exit 1
         else
@@ -193,7 +193,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: PNP4Nagios RPMs
-        path: ./pnp4nagios-0.6.27-5.alma.el8.x86_64.rpm
+        path: ./x86_64/pnp4nagios-0.6.27-5.alma.el8.x86_64.rpm
         if-no-files-found: error  # This ensures it fails if the file isn't found
 
   publish-rpms:
