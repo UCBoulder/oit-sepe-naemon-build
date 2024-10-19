@@ -78,7 +78,7 @@ sed -i -e '/^\t$(MAKE) strip-post-install$/d' src/Makefile.in
 
 
 %build
-
+export RRDTOOL=/usr/bin/rrdtool
 
 autoconf
 %configure --prefix='' \
