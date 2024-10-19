@@ -162,6 +162,16 @@ jobs:
     - name: run rrdtool
       run: /usr/bin/rrdtool 
 
+    - name: Check if rrdtool is executable
+      run: |
+        RRDTOOL=/usr/bin/rrdtool
+        if ! test -x $RRDTOOL; then
+          echo "$RRDTOOL is not executable!"
+          exit 1
+        else
+          echo "$RRDTOOL is executable!"
+        fi
+
     - name: build PNP4Nagios packages
       id: build
       uses: UCBoulder/oit-sepe-rpmbuild@master
