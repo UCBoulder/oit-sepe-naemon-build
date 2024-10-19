@@ -3,8 +3,8 @@
 %global _libdir      %{_prefix}/lib64
 
 Name:           pnp4nagios
-Version:        0.6.27
-Release:        5%{?dist}
+Version:        0.6.27-5
+Release:        1%{?dist}
 Summary:        Nagios performance data analysis tool
 
 Group:          Applications/System
