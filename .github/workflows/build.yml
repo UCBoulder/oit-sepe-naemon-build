@@ -148,6 +148,24 @@ jobs:
         name: Thruk RPMs
         path: ${{ steps.build.outputs.rpm_dir_path }}
 
+  build-pnp4nagios:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: build PNP4Nagios packages
+      id: build
+      uses: UCBoulder/oit-sepe-rpmbuild@master
+      with:
+        spec_file: "pnp4nagios.spec"
+        additional_repos: '["epel-release"]'
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: PNP4Nagios RPMs
+        path: ${{ steps.build.outputs.rpm_dir_path }}
+        ￼
   publish-rpms:
     if: ${{ startsWith(github.ref, 'refs/tags/') }}
     runs-on: ubuntu-latest
@@ -159,6 +177,7 @@ jobs:
       - build-libthruk
       - build-thruk
       - build-merlin
+      - build-pnp4nagios
     steps:
     - uses: actions/download-artifact@v4
       with:
