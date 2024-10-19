@@ -25,3 +25,11 @@ git tag cub-X.Y.Z
 git push origin cub-X.Y.Z
 ```
 
+NOTE: You can also do this from a branch if you want - probably not the best, but there could be reasons for it. 
+
+And if you run into trouble, you can blow away a tag
+```
+git tag -d cub-X.Y.Z
+git push origin :refs/tags/cub-X.Y.Z
+```
+Then go delete the release from github, by clicking around and hitting the trash can icon 
