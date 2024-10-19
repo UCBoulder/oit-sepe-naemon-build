@@ -179,12 +179,12 @@ jobs:
 
     - name: debugging
       run: |
-      if [ ! -f pnp4nagios-0.6.27-5.alma.el8.x86_64.rpm ]; then
-      echo "Failed to download the PNP4Nagios RPM"
-      exit 1
-      else
-        echo "PNP4Nagios RPM fetched successfully"
-      fi
+        if [ ! -f pnp4nagios-0.6.27-5.alma.el8.x86_64.rpm ]; then
+          echo "Failed to download the PNP4Nagios RPM"
+          exit 1
+        else
+          echo "PNP4Nagios RPM fetched successfully"
+        fi
 
     - name: List files in the current directory
       run: ls -la
