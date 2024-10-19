@@ -64,7 +64,9 @@ SElinux security policy for %{name}.
 
 
 %prep
-%setup -q -n %{name}-%{version}
+echo "Source0: %{name}-%{version}.tar.gz"
+echo "Build directory: %{_builddir}"
+%setup -q -n pnp4nagios-0.6.27
 #autoreconf
 cp contrib/fedora/pnp4nagios-README.fedora README.fedora
 sed -i -e 's/^INSTALL_OPTS="-o $nagios_user -g $nagios_grp"/INSTALL_OPTS=""/' \
