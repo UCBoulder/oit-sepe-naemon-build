@@ -153,6 +153,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Install dependencies
+      run: sudo apt-get install -y rrdtool rrdtool-perl php-gd php-xml php-mbstring
+
     - name: build PNP4Nagios packages
       id: build
       uses: UCBoulder/oit-sepe-rpmbuild@master
