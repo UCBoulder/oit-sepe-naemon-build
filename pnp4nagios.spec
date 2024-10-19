@@ -4,13 +4,13 @@
 
 Name:           pnp4nagios
 Version:        0.6.27
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Nagios performance data analysis tool
 
 Group:          Applications/System
 License:        GPLv2
 URL:            https://github.com/pnp4nagios/pnp4nagios
-Source0:        %{name}-%{version}.tgz
+Source0:        https://github.com/pnp4nagios/pnp4nagios/archive/refs/tags/v%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 BuildRequires:  autoconf, automake, libtool
