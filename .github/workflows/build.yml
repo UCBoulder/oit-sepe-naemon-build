@@ -156,6 +156,18 @@ jobs:
     - name: Install dependencies
       run: sudo apt-get install -y rrdtool librrd-dev librrds-perl php-gd php-xml php-mbstring
 
+    - name: Where is rrdtool
+      run: which rrdtool
+
+    - name: What version is rrdtool
+      run: rrdtool --version
+
+    - name: dpkg list rrdtool
+      run: dpkg --list rrdtool
+
+    - name: dpkg list files
+      run: dpkg --listfiles rrdtool
+
     - name: build PNP4Nagios packages
       id: build
       uses: UCBoulder/oit-sepe-rpmbuild@master
