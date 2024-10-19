@@ -198,7 +198,7 @@ jobs:
     steps:
     - uses: actions/download-artifact@v4
       with:
-        merge: true  # Corrected this to 'merge'
+        merge-multiple: true
 
     - uses: ncipollo/release-action@v1
       with:
