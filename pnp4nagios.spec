@@ -3,14 +3,14 @@
 %global _libdir      %{_prefix}/lib64
 
 Name:           pnp4nagios
-Version:        0.6.27-5
-Release:        1%{?dist}
+Version:        0.6.27
+Release:        5%{?dist}
 Summary:        Nagios performance data analysis tool
 
 Group:          Applications/System
 License:        GPLv2
 URL:            https://github.com/pnp4nagios/pnp4nagios
-Source0:        https://github.com/pnp4nagios/pnp4nagios/archive/refs/tags/v%{version}.tar.gz
+Source0:        https://github.com/pnp4nagios/pnp4nagios/archive/refs/tags/v%{version}-%{release}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 BuildRequires:  autoconf, automake, libtool
@@ -64,7 +64,7 @@ SElinux security policy for %{name}.
 
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -n %{name}-%{version}-%{release}
 #autoreconf
 cp contrib/fedora/pnp4nagios-README.fedora README.fedora
 sed -i -e 's/^INSTALL_OPTS="-o $nagios_user -g $nagios_grp"/INSTALL_OPTS=""/' \
