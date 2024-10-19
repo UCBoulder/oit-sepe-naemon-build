@@ -194,7 +194,7 @@ jobs:
       - build-libthruk
       - build-thruk
       - build-merlin
-      - build-pnp4nagios
+      - fetch-pnp4nagios
     steps:
     - uses: actions/download-artifact@v4
       with:
