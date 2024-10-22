@@ -127,10 +127,10 @@ fi
 rm -f $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/config.php.*
 rm -f $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/config_local.php
 chmod a-x $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/config.php
-# since we did not call make install-config, this step fails.
+# since we did not call make install-config, this step fails. - schoelle 20241022
 #chmod a-x $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/*.cfg
 #chmod a-x $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/*.md
-chmod a-x $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/check_commands/*.cfg-sample
+#chmod a-x $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/check_commands/*.cfg-sample
 
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/lib/%{name}
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/spool/%{name}
