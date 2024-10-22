@@ -210,7 +210,7 @@ jobs:
       - build-libthruk
       - build-thruk
       - build-merlin
-      - fetch-pnp4nagios
+      - build-pnp4nagios
     steps:
     - uses: actions/download-artifact@v4
       with:
