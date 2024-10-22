@@ -118,7 +118,7 @@ if [ "$RPM_BUILD_ROOT" != "/" ]; then
 fi
 %{__make} install DESTDIR=$RPM_BUILD_ROOT INSTALL_OPTS="" HTTP_INSTALL_OPTS="" MIX_OPTS="" INIT_OPTS="" NOSAMPLES=1
 # for NPCD
-%{__make} install-init DESTDIR=$RPM_BUILD_ROOT INSTALL_OPTS="" HTTP_INSTALL_OPTS="" MIX_OPTS="" INIT_OPTS="" NOSAMPLES=1
+#%{__make} install-init DESTDIR=$RPM_BUILD_ROOT INSTALL_OPTS="" HTTP_INSTALL_OPTS="" MIX_OPTS="" INIT_OPTS="" NOSAMPLES=1
 
 # NO...do NOT remove -sample from filename suffix
 #for i in $RPM_BUILD_ROOT/%{_sysconfdir}/pnp4nagios/*-sample \
@@ -157,8 +157,9 @@ install -m 0644 contrib/fedora/logwatch/conf/logfiles/pnp4nagios.conf \
 #sed 's|/usr/local/nagios/etc/htpasswd.users|@NAGIOS_PWD@|' \
 #   sample-config/httpd.conf \
 #   > $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/%{name}.conf
-install -Dp -m 0644 scripts/npcd.service \
-        $RPM_BUILD_ROOT%{_unitdir}/npcd.service
+# This doesn't work. 
+#install -Dp -m 0644 scripts/npcd.service \
+#        $RPM_BUILD_ROOT%{_unitdir}/npcd.service
 
 #### broker api changed
 #mkdir -p $RPM_BUILD_ROOT%{_libdir}/nagios/brokers
