@@ -16,7 +16,7 @@ URL:            https://github.com/pnp4nagios/pnp4nagios
 Source0:        https://github.com/pnp4nagios/pnp4nagios/archive/refs/tags/v%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
-BuildRequires:  autoconf, automake, libtool, rrdtool
+BuildRequires:  autoconf, automake, libtool, rrdtool, rrdtool-perl, perl(Time::HiRes)
 Requires:       rrdtool-perl
 Requires:       perl(Time::HiRes)
 Requires:       httpd
