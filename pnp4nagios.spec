@@ -127,6 +127,8 @@ fi
 rm -f $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/config.php.*
 rm -f $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/config_local.php
 chmod a-x $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/config.php
+# temporary
+ls -la $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/
 chmod a-x $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/*.cfg
 chmod a-x $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/*.md
 chmod a-x $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/check_commands/*.cfg-sample
