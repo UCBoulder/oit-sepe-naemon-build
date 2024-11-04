@@ -175,8 +175,9 @@ install -m 0644 contrib/fedora/logwatch/conf/logfiles/pnp4nagios.conf \
 #  $RPM_BUILD_ROOT%{_datadir}/nagios/html/%{name}/kohana
 #sed -i 's|%{_libdir}/pnp4nagios/kohana|%{_datadir}/nagios/html/%{name}/kohana|' \
 #  $RPM_BUILD_ROOT%{_datadir}/nagios/html/%{name}/index.php
-mv $RPM_BUILD_ROOT%{_datadir}/naemon/html/%{name}/install.ignore.not \
-   $RPM_BUILD_ROOT%{_datadir}/naemon/html/%{name}/install.ignore
+# 20241104 - this was failing, disabling it - schoelle
+#mv $RPM_BUILD_ROOT%{_datadir}/naemon/html/%{name}/install.ignore.not \
+#   $RPM_BUILD_ROOT%{_datadir}/naemon/html/%{name}/install.ignore
 rm $RPM_BUILD_ROOT%{_sysconfdir}/pnp4nagios/background.pdf
 
 %if 0%{with_selinux}
