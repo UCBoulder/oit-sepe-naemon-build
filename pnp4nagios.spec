@@ -180,11 +180,11 @@ install -m 0644 contrib/fedora/logwatch/conf/logfiles/pnp4nagios.conf \
 #   $RPM_BUILD_ROOT%{_datadir}/naemon/html/%{name}/install.ignore
 rm $RPM_BUILD_ROOT%{_sysconfdir}/pnp4nagios/background.pdf
 
-%if 0%{with_selinux}
-install -d $RPM_BUILD_ROOT%{_localstatedir}/lib/selinux/tmp/%{name}
-install -m 0644 %{name}.fc $RPM_BUILD_ROOT%{_localstatedir}/lib/selinux/tmp/%{name}/%{modulename}.fc
-install -m 0644 %{name}.te $RPM_BUILD_ROOT%{_localstatedir}/lib/selinux/tmp/%{name}/%{modulename}.te
-%endif
+#%if 0%{with_selinux}
+#install -d $RPM_BUILD_ROOT%{_localstatedir}/lib/selinux/tmp/%{name}
+#install -m 0644 %{name}.fc $RPM_BUILD_ROOT%{_localstatedir}/lib/selinux/tmp/%{name}/%{modulename}.fc
+#install -m 0644 %{name}.te $RPM_BUILD_ROOT%{_localstatedir}/lib/selinux/tmp/%{name}/%{modulename}.te
+#%endif
 
 %package logrotate
 Summary:        config for rotating pnp4nagios logs
