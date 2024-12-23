@@ -11,7 +11,7 @@
 %undefine _disable_source_fetch
 
 Name:          thruk
-Version:       3.12
+Version:       3.20.2
 Release:       12878.1
 License:       GPL-2.0-or-later
 Packager:      Sven Nierlein <sven.nierlein@consol.de>
