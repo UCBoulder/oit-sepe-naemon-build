@@ -11,8 +11,8 @@
 %undefine _disable_source_fetch
 
 Name:          thruk
-Version:       3.12
-Release:       12878.1
+Version:       3.20.2
+Release:       13569.1
 License:       GPL-2.0-or-later
 Packager:      Sven Nierlein <sven.nierlein@consol.de>
 Vendor:        Labs Consol
@@ -145,6 +145,9 @@ cp support/apache_fcgid.conf.apache22            support/apache_fcgid.conf
 cp support/thruk_cookie_auth.example.apache22    support/thruk_cookie_auth.example
 cp support/thruk_cookie_auth.include.apache22    support/thruk_cookie_auth.include
 cp support/thruk_cookie_auth_vhost.conf.apache22 support/thruk_cookie_auth_vhost.conf
+%endif
+
+%if 0%{?rhel} >= 8
 %endif
 
 # remove version control files
@@ -450,6 +453,10 @@ exit 0
 %config %{_sysconfdir}/%{name}/plugins/plugins-available/core_scheduling
 %{_datadir}/%{name}/plugins/plugins-available/agents
 %config %{_sysconfdir}/%{name}/plugins/plugins-available/agents
+%{_datadir}/%{name}/plugins/plugins-available/editor
+%config %{_sysconfdir}/%{name}/plugins/plugins-available/editor
+%{_datadir}/%{name}/plugins/plugins-available/node-control
+%config %{_sysconfdir}/%{name}/plugins/plugins-available/node-control
 %config(noreplace) %{_sysconfdir}/thruk/themes
 %config(noreplace) %{_sysconfdir}/thruk/menu_local.conf
 %config(noreplace) %{_sysconfdir}/thruk/usercontent/
