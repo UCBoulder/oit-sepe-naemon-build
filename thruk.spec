@@ -21,7 +21,7 @@ URL:           http://thruk.org
 Source0:       https://github.com/sni/Thruk/archive/refs/tags/v%{version}.tar.gz
 BuildRoot:     %{_tmppath}/%{name}-%{version}-%{release}
 Group:         Applications/Monitoring
-BuildRequires: autoconf, automake, perl, patch
+BuildRequires: autoconf, automake, perl, patch, npm
 Summary:       Monitoring Webinterface for Nagios/Naemon/Icinga and Shinken
 AutoReqProv:   no
 BuildRequires: libthruk >= 2.44.2
@@ -106,7 +106,39 @@ This package contains the reporting addon for thruk useful for sla
 and event reporting.
 
 %prep
-%setup -q -n Thruk-%{version}
+%setup -q -n thruk-%{version}
+
+# Backport theme build fixes from upstream Thruk v3.26.
+# Without this, the theme Makefiles install tailwindcss@latest which pulls
+# Tailwind v4, a breaking change incompatible with the v3 config files.
+# 1) Create pinned package.json in each theme directory
+# 2) Patch the Light Makefile to read from package.json instead of @latest
+for theme_dir in themes/themes-available/Dark themes/themes-available/Light; do
+  cat > "$theme_dir/package.json" << 'PKGJSON'
+{
+  "name": "thruk-theme",
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.10",
+    "autoprefixer": "^10.4.20",
+    "n": "^10.2.0",
+    "postcss": "^8.5.1",
+    "postcss-import": "<16.0.0",
+    "tailwindcss": "<4.0.0"
+  }
+}
+PKGJSON
+done
+# Patch Light Makefile to read deps from package.json instead of @latest.
+# Remove the explicit @latest package lines and fix the trailing backslash
+# so npm reads pinned versions from our package.json instead.
+sed -i -e '/tailwindcss@latest/d' \
+       -e '/postcss@latest/d' \
+       -e '/autoprefixer@latest/d' \
+       -e '/postcss-import@latest/d' \
+       -e '/@tailwindcss\/forms@latest/d' \
+       -e 's|--prefix=\$(shell pwd)/\. \\|--prefix=$(shell pwd)/.|' \
+       -e '/package\.json \\$/d' \
+    themes/themes-available/Light/Makefile
 
 %build
 export PERL5LIB=/usr/lib/thruk/perl5:/usr/lib64/thruk/perl5

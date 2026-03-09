@@ -39,7 +39,7 @@ Requires: systemd
 BuildRequires: libsodium-devel
 BuildRequires: mariadb-devel
 BuildRequires: naemon-devel
-BuildRequires: python2
+BuildRequires: python39
 BuildRequires: gperf
 BuildRequires: check-devel
 BuildRequires: autoconf, automake, libtool
@@ -59,7 +59,7 @@ Requires: libaio
 Requires: merlin-apps-slim >= %version
 Requires: glib2
 BuildRequires: naemon-devel
-BuildRequires: python2
+BuildRequires: python39
 BuildRequires: gperf
 BuildRequires: check-devel
 BuildRequires: autoconf, automake, libtool
@@ -193,8 +193,8 @@ cp nrpe-merlin.cfg %buildroot%_sysconfdir/nrpe.d
 %{__install} -d %{buildroot}%{naemon_confdir}/oconf
 
 %check
-python2 tests/pyunit/test_log.py --verbose
-python2 tests/pyunit/test_oconf.py --verbose
+python3 tests/pyunit/test_log.py --verbose
+python3 tests/pyunit/test_oconf.py --verbose
 
 mkdir -p %buildroot%_localstatedir/merlin
 
