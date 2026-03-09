@@ -460,6 +460,8 @@ exit 0
 %config %{_sysconfdir}/%{name}/plugins/plugins-available/editor
 %{_datadir}/%{name}/plugins/plugins-available/node-control
 %config %{_sysconfdir}/%{name}/plugins/plugins-available/node-control
+%{_datadir}/%{name}/plugins/plugins-available/omd
+%config %{_sysconfdir}/%{name}/plugins/plugins-available/omd
 %config(noreplace) %{_sysconfdir}/thruk/themes
 %config(noreplace) %{_sysconfdir}/thruk/menu_local.conf
 %config(noreplace) %{_sysconfdir}/thruk/usercontent/
@@ -475,6 +477,7 @@ exit 0
 %attr(0755,root,root) %{_datadir}/thruk/script/pnp_export.sh
 %attr(0755,root,root) %{_datadir}/thruk/script/convert_old_datafile
 %attr(0755,root,root) %{_datadir}/thruk/script/check_thruk_rest
+%attr(0755,root,root) %{_datadir}/thruk/script/check_thruk_rest.sh
 %{_datadir}/thruk/support
 %{_datadir}/thruk/root
 %{_datadir}/thruk/templates
