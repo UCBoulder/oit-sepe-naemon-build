@@ -131,6 +131,9 @@ export PERL5LIB=/usr/lib/thruk/perl5:/usr/lib64/thruk/perl5
 # make sure themes are built as this point
 test -f themes/themes-available/Light/stylesheets/Light.css || %{__make} themes
 test -f themes/themes-available/Light/stylesheets/Light.css || exit 1
+# generate combined static content (panorama JS cache)
+test -f root/thruk/cache/thruk-panorama-*.js || perl script/thruk_create_combined_static_content.pl
+test -f root/thruk/cache/thruk-panorama-*.js || exit 1
 
 # replace /usr/bin/env according to https://fedoraproject.org/wiki/Packaging:Guidelines#Shebang_lines
 sed -e 's%/usr/bin/env perl%/usr/bin/perl%' -i \
