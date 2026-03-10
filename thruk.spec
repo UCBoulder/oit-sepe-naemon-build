@@ -11,8 +11,8 @@
 %undefine _disable_source_fetch
 
 Name:          thruk
-Version:       3.20.2
-Release:       13569.1
+Version:       3.26
+Release:       14286.1
 License:       GPL-2.0-or-later
 Packager:      Sven Nierlein <sven.nierlein@consol.de>
 Vendor:        Labs Consol
@@ -24,7 +24,7 @@ Group:         Applications/Monitoring
 BuildRequires: autoconf, automake, perl, patch, npm
 Summary:       Monitoring Webinterface for Nagios/Naemon/Icinga and Shinken
 AutoReqProv:   no
-BuildRequires: libthruk >= 2.44.2
+BuildRequires: libthruk >= 3.24
 Requires:      thruk-base = %{version}-%{release}
 Requires:      thruk-plugin-reporting = %{version}-%{release}
 %if 0%{?suse_version} < 1315
@@ -50,7 +50,7 @@ large installations.
 %package base
 Summary:     Thruk Gui Base Files
 Group:       Applications/System
-Requires:    libthruk >= 2.44.2
+Requires:    libthruk >= 3.24
 Requires(preun): libthruk
 Requires(post): libthruk
 Requires:    perl logrotate gd wget
@@ -108,38 +108,6 @@ and event reporting.
 %prep
 %setup -q -n thruk-%{version}
 
-# Backport theme build fixes from upstream Thruk v3.26.
-# Without this, the theme Makefiles install tailwindcss@latest which pulls
-# Tailwind v4, a breaking change incompatible with the v3 config files.
-# 1) Create pinned package.json in each theme directory
-# 2) Patch the Light Makefile to read from package.json instead of @latest
-for theme_dir in themes/themes-available/Dark themes/themes-available/Light; do
-  cat > "$theme_dir/package.json" << 'PKGJSON'
-{
-  "name": "thruk-theme",
-  "devDependencies": {
-    "@tailwindcss/forms": "^0.5.10",
-    "autoprefixer": "^10.4.20",
-    "n": "^10.2.0",
-    "postcss": "^8.5.1",
-    "postcss-import": "<16.0.0",
-    "tailwindcss": "<4.0.0"
-  }
-}
-PKGJSON
-done
-# Patch Light Makefile to read deps from package.json instead of @latest.
-# Remove the explicit @latest package lines and fix the trailing backslash
-# so npm reads pinned versions from our package.json instead.
-sed -i -e '/tailwindcss@latest/d' \
-       -e '/postcss@latest/d' \
-       -e '/autoprefixer@latest/d' \
-       -e '/postcss-import@latest/d' \
-       -e '/@tailwindcss\/forms@latest/d' \
-       -e 's|--prefix=\$(shell pwd)/\. \\|--prefix=$(shell pwd)/.|' \
-       -e '/package\.json \\$/d' \
-    themes/themes-available/Light/Makefile
-
 %build
 export PERL5LIB=/usr/lib/thruk/perl5:/usr/lib64/thruk/perl5
 %configure \
@@ -163,6 +131,9 @@ export PERL5LIB=/usr/lib/thruk/perl5:/usr/lib64/thruk/perl5
 # make sure themes are built as this point
 test -f themes/themes-available/Light/stylesheets/Light.css || %{__make} themes
 test -f themes/themes-available/Light/stylesheets/Light.css || exit 1
+# generate combined static content (panorama JS cache)
+test -f root/thruk/cache/thruk-panorama-*.js || perl script/thruk_create_combined_static_content.pl
+test -f root/thruk/cache/thruk-panorama-*.js || exit 1
 
 # replace /usr/bin/env according to https://fedoraproject.org/wiki/Packaging:Guidelines#Shebang_lines
 sed -e 's%/usr/bin/env perl%/usr/bin/perl%' -i \
@@ -489,6 +460,8 @@ exit 0
 %config %{_sysconfdir}/%{name}/plugins/plugins-available/editor
 %{_datadir}/%{name}/plugins/plugins-available/node-control
 %config %{_sysconfdir}/%{name}/plugins/plugins-available/node-control
+%{_datadir}/%{name}/plugins/plugins-available/omd
+%config %{_sysconfdir}/%{name}/plugins/plugins-available/omd
 %config(noreplace) %{_sysconfdir}/thruk/themes
 %config(noreplace) %{_sysconfdir}/thruk/menu_local.conf
 %config(noreplace) %{_sysconfdir}/thruk/usercontent/
@@ -504,6 +477,7 @@ exit 0
 %attr(0755,root,root) %{_datadir}/thruk/script/pnp_export.sh
 %attr(0755,root,root) %{_datadir}/thruk/script/convert_old_datafile
 %attr(0755,root,root) %{_datadir}/thruk/script/check_thruk_rest
+%attr(0755,root,root) %{_datadir}/thruk/script/check_thruk_rest.sh
 %{_datadir}/thruk/support
 %{_datadir}/thruk/root
 %{_datadir}/thruk/templates

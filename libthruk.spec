@@ -2,7 +2,7 @@
 
 Summary: Thruk perl libraries
 Name: libthruk
-Version: 3.20
+Version: 3.26
 Release: 0
 License: GPL-2.0-or-later
 Group: Applications/System
@@ -11,58 +11,66 @@ Packager: Sven Nierlein <sven.nierlein@consol.de>
 Vendor: Labs Consol
 Source0: https://github.com/sni/thruk_libs/archive/refs/tags/v%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}
-BuildRequires: gd-devel > 1.8
-BuildRequires: zlib-devel
-BuildRequires: libpng-devel
-BuildRequires: libjpeg-devel
-BuildRequires: mysql-devel
 BuildRequires: perl
-BuildRequires: autoconf
-BuildRequires: automake
-BuildRequires: binutils
+BuildRequires: perl-devel
 BuildRequires: gcc
-BuildRequires: chrpath
+BuildRequires: make
 BuildRequires: rsync
-Requires: gd
+BuildRequires: perl(Bit::Vector)
+BuildRequires: perl(Cpanel::JSON::XS)
+BuildRequires: perl(Date::Calc)
+BuildRequires: perl(Digest::SHA)
+BuildRequires: perl(ExtUtils::Install)
+BuildRequires: perl(HTTP::Request)
+BuildRequires: perl(IO::Scalar)
+BuildRequires: perl(LWP::Protocol::https)
+BuildRequires: perl(LWP::UserAgent)
+BuildRequires: perl(Module::Install)
+BuildRequires: perl(XML::Parser)
 
-# sles
-%if %{defined suse_version}
-BuildRequires: libexpat-devel
-BuildRequires: fontconfig-devel
-BuildRequires: xorg-x11-libXpm-devel
-# sles 12
-%if 0%{?suse_version} >= 1315
-BuildRequires: libpng16-devel
-BuildRequires: libtiff-devel
-BuildRequires: libvpx-devel
-Requires: libjpeg62
-%else
-# sles 11
-BuildRequires: freetype2-devel
-%endif
+# epel needed for system perl modules on RHEL/Rocky/Alma
+%if 0%{?rhel} || 0%{?rocky} || 0%{?almalinux}
+BuildRequires: epel-release
 %endif
 
-# centos
-%if 0%{?el6}
-BuildRequires: perl-devel
-BuildRequires: expat-devel
-%endif
-%if 0%{?el7}
-BuildRequires: perl(Locale::Maketext::Simple)
-BuildRequires: perl-devel
-Requires: perl(Data::Dumper)
-Requires: perl(Digest)
-%endif
-%if 0%{?el8}
-BuildRequires: perl-devel
-BuildRequires: expat-devel
-%endif
-
-# fedora
-%if 0%{?fedora}
-BuildRequires: perl-devel
-BuildRequires: expat-devel
-%endif
+# v3.26 uses system perl modules instead of bundling them
+Requires: perl(Bit::Vector)
+Requires: perl(Cpanel::JSON::XS)
+Requires: perl(Crypt::Rijndael)
+Requires: perl(Date::Calc)
+Requires: perl(Date::Manip)
+Requires: perl(DBD::mysql)
+Requires: perl(DBI)
+Requires: perl(FCGI)
+Requires: perl(GD)
+Requires: perl(HTML::Entities)
+Requires: perl(HTTP::Request)
+Requires: perl(IO::Scalar)
+Requires: perl(IO::Socket::IP)
+Requires: perl(IO::Socket::SSL)
+Requires: perl(IO::String)
+Requires: perl(Log::Log4perl)
+Requires: perl(LWP::Protocol::https)
+Requires: perl(LWP::UserAgent)
+Requires: perl(MIME::Lite)
+Requires: perl(Module::Load)
+Requires: perl(Net::HTTP)
+Requires: perl(Net::SSLeay)
+Requires: perl(parent)
+Requires: perl(Plack)
+Requires: perl(Plack::Handler::FCGI)
+Requires: perl(Plack::Util)
+Requires: perl(Plack::Test)
+Requires: perl(Pod::Usage)
+Requires: perl(Socket)
+Requires: perl(Storable)
+Requires: perl(Template)
+Requires: perl(Thread::Queue)
+Requires: perl(threads)
+Requires: perl(Tie::IxHash)
+Requires: perl(Time::HiRes)
+Requires: perl(URI::Escape)
+Requires: perl(XML::Parser)
 
 # disable creating useless empty debug packages
 %define debug_package %{nil}
@@ -86,9 +94,6 @@ large installations.
 %install
 %{__rm} -rf %{buildroot}
 %{__make} install DESTDIR="%{buildroot}" LIBDIR="%{_libdir}/thruk/"
-%if %{defined suse_version}
-%{__make} installbuilddeps DESTDIR="%{buildroot}" LIBDIR="%{_libdir}/thruk/"
-%endif
 
 %clean
 %{__rm} -rf %{buildroot}
@@ -102,4 +107,3 @@ large installations.
 
 * Mon Jul 13 2015 Sven Nierlein <sven.nierlein@consol.de> 2.00-1
 - Initial libs package
-
