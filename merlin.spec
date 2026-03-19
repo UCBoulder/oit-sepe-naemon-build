@@ -24,7 +24,6 @@ Release: 2
 License: GPLv2
 URL: https://github.com/ITRS-Group/monitor-merlin/
 Source0: https://github.com/ITRS-Group/monitor-merlin/archive/refs/tags/v%{version}.tar.gz
-Patch0: merlin-naemon-1.5.1-check_timeout.patch
 BuildRoot: %{_tmppath}/monitor-%{name}-%{version}
 Requires: libaio
 Requires: merlin-apps >= %version
@@ -163,7 +162,11 @@ network monitoring setup.
 
 %prep
 %setup -q -n monitor-%{name}-%{version}
-%patch0 -p1
+
+# Patch for naemon 1.5.1: add check_timeout parameter to setup_host_variables
+# and setup_service_variables calls in oconfsplit.c
+sed -i 's/h->check_period, h-> initial_state, h->check_interval/h->check_period, h->initial_state, h->check_timeout, h->check_interval/' module/oconfsplit.c
+sed -i 's/s->initial_state, s->max_attempts/s->initial_state, s->check_timeout, s->max_attempts/' module/oconfsplit.c
 
 %build
 echo %{version} > .version_number

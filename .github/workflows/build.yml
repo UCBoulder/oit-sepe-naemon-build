@@ -94,11 +94,6 @@ jobs:
       with:
         name: Naemon Core RPMs
 
-    - name: Copy patch files to rpmbuild SOURCES
-      run: |
-        mkdir -p /github/home/rpmbuild/SOURCES
-        cp merlin-*.patch /github/home/rpmbuild/SOURCES/ 2>/dev/null || true
-
     - name: build Merlin packages
       id: build
       uses: UCBoulder/oit-sepe-rpmbuild@master
