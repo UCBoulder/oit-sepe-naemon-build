@@ -20,7 +20,7 @@
 Summary: The merlin daemon is a multiplexing event-transport program
 Name: merlin
 Version: 2024.10.14
-Release: 1
+Release: 2
 License: GPLv2
 URL: https://github.com/ITRS-Group/monitor-merlin/
 Source0: https://github.com/ITRS-Group/monitor-merlin/archive/refs/tags/v%{version}.tar.gz
