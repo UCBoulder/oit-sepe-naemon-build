@@ -96,8 +96,8 @@ jobs:
 
     - name: Copy patch files to rpmbuild SOURCES
       run: |
-        mkdir -p $HOME/rpmbuild/SOURCES
-        cp merlin-*.patch $HOME/rpmbuild/SOURCES/ 2>/dev/null || true
+        mkdir -p /github/home/rpmbuild/SOURCES
+        cp merlin-*.patch /github/home/rpmbuild/SOURCES/ 2>/dev/null || true
 
     - name: build Merlin packages
       id: build
