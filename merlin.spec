@@ -20,7 +20,7 @@
 Summary: The merlin daemon is a multiplexing event-transport program
 Name: merlin
 Version: 2024.10.14
-Release: 1
+Release: 2
 License: GPLv2
 URL: https://github.com/ITRS-Group/monitor-merlin/
 Source0: https://github.com/ITRS-Group/monitor-merlin/archive/refs/tags/v%{version}.tar.gz
@@ -162,6 +162,12 @@ network monitoring setup.
 
 %prep
 %setup -q -n monitor-%{name}-%{version}
+
+# Patch for naemon 1.5.1: add check_timeout parameter to setup_host_variables
+# and setup_service_variables calls in oconfsplit.c
+sed -i 's/h->check_period, h-> initial_state, h->check_interval/h->check_period, h->initial_state, h->check_timeout, h->check_interval/' module/oconfsplit.c
+sed -i 's/s->initial_state, s->max_attempts/s->initial_state, s->check_timeout, s->max_attempts/' module/oconfsplit.c
+grep -q 'check_timeout' module/oconfsplit.c || { echo "ERROR: check_timeout patch did not apply"; exit 1; }
 
 %build
 echo %{version} > .version_number
