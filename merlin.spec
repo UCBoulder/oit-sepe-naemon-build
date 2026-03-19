@@ -24,6 +24,7 @@ Release: 2
 License: GPLv2
 URL: https://github.com/ITRS-Group/monitor-merlin/
 Source0: https://github.com/ITRS-Group/monitor-merlin/archive/refs/tags/v%{version}.tar.gz
+Patch0: merlin-naemon-1.5.1-check_timeout.patch
 BuildRoot: %{_tmppath}/monitor-%{name}-%{version}
 Requires: libaio
 Requires: merlin-apps >= %version
@@ -162,6 +163,7 @@ network monitoring setup.
 
 %prep
 %setup -q -n monitor-%{name}-%{version}
+%patch0 -p1
 
 %build
 echo %{version} > .version_number
