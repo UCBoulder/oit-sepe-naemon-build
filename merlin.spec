@@ -20,10 +20,19 @@
 Summary: The merlin daemon is a multiplexing event-transport program
 Name: merlin
 Version: 2024.10.14
-Release: 2
+Release: 3
 License: GPLv2
 URL: https://github.com/ITRS-Group/monitor-merlin/
 Source0: https://github.com/ITRS-Group/monitor-merlin/archive/refs/tags/v%{version}.tar.gz
+
+# TEMPORARY: Patch for naemon 1.5.1 check_timeout API change.
+# Remove this Patch0 declaration and the %patch0 invocation below when
+# merlin releases a version that includes the fix. Also bump Version/
+# Release and update the merlin dependency filenames in build.yml at
+# that time.
+# Upstream PR: https://github.com/ITRS-Group/monitor-merlin/pull/174
+Patch0: merlin-0001-check_timeout-naemon-1.5.1.patch
+
 BuildRoot: %{_tmppath}/monitor-%{name}-%{version}
 Requires: libaio
 Requires: merlin-apps >= %version
@@ -162,12 +171,7 @@ network monitoring setup.
 
 %prep
 %setup -q -n monitor-%{name}-%{version}
-
-# Patch for naemon 1.5.1: add check_timeout parameter to setup_host_variables
-# and setup_service_variables calls in oconfsplit.c
-sed -i 's/h->check_period, h-> initial_state, h->check_interval/h->check_period, h->initial_state, h->check_timeout, h->check_interval/' module/oconfsplit.c
-sed -i 's/s->initial_state, s->max_attempts/s->initial_state, s->check_timeout, s->max_attempts/' module/oconfsplit.c
-grep -q 'check_timeout' module/oconfsplit.c || { echo "ERROR: check_timeout patch did not apply"; exit 1; }
+%patch0 -p1
 
 %build
 echo %{version} > .version_number
