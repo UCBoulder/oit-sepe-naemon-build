@@ -342,7 +342,7 @@ systemctl restart naemon || :
 rm -rf %buildroot
 
 %changelog
-* Wed Apr 09 2026 Eric Schoeller <eric.schoeller@colorado.edu>
+* Thu Apr 09 2026 Eric Schoeller <eric.schoeller@colorado.edu>
 - SEPE-1064: Remove dead code from %post (DB, log import, sed, nrpe restart)
 - Stop installing nrpe-merlin.cfg (references non-existent /opt/plugins/ paths)
 - Bump Release to 4
