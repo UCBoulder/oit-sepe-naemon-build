@@ -209,8 +209,8 @@ python3 tests/pyunit/test_oconf.py --verbose
 mkdir -p %buildroot%_localstatedir/merlin
 
 %post
-systemctl daemon-reload
-systemctl enable merlind.service
+systemctl daemon-reload || :
+systemctl enable merlind.service || :
 
 # chown old cached nodesplit data, so it can be deleted
 chown -R %daemon_user:%daemon_group %_localstatedir/cache/merlin
@@ -232,13 +232,13 @@ if [ $1 -eq 0 ]; then
 fi
 
 %postun -n monitor-merlin
-if [ $1 -eq 0 ]; then
-    systemctl restart nrpe || :
-fi
+# nrpe restart removed — nrpe picks up config changes on reload,
+# and the merlin package uninstall doesn't require an nrpe bounce.
 
 %post -n monitor-merlin
 systemctl restart naemon || :
-systemctl restart nrpe || :
+# nrpe restart removed — unnecessary; nrpe picks up the
+# nrpe-merlin.cfg drop-in without a full restart.
 
 %files
 %defattr(-,root,root)
