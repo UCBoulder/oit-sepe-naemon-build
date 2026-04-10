@@ -239,8 +239,6 @@ fi
 
 %post -n monitor-merlin
 systemctl restart naemon || :
-# nrpe restart removed — unnecessary; nrpe picks up the
-# nrpe-merlin.cfg drop-in without a full restart.
 
 %files
 %defattr(-,root,root)
@@ -342,6 +340,10 @@ systemctl restart naemon || :
 rm -rf %buildroot
 
 %changelog
+* Wed Apr 09 2026 Eric Schoeller <eric.schoeller@colorado.edu>
+- SEPE-1064: Remove dead code from %post (DB, log import, sed, nrpe restart)
+- Stop installing nrpe-merlin.cfg (references non-existent /opt/plugins/ paths)
+- Bump Release to 4
 * Thu Feb 08 2024 Will Haines <william.haines@colorado.edu>
 - Fork for CU Boulder
 * Thu Feb 11 2021 Aksel Sjögren <asjogren@itrsgroup.com>
