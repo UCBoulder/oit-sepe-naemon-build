@@ -20,7 +20,7 @@
 Summary: The merlin daemon is a multiplexing event-transport program
 Name: merlin
 Version: 2024.10.14
-Release: 3
+Release: 4
 License: GPLv2
 URL: https://github.com/ITRS-Group/monitor-merlin/
 Source0: https://github.com/ITRS-Group/monitor-merlin/archive/refs/tags/v%{version}.tar.gz
@@ -210,54 +210,21 @@ mkdir -p %buildroot%_localstatedir/merlin
 
 %post
 systemctl daemon-reload
-# we must stop the merlin deamon so it doesn't interfere with any
-# database upgrades, logfile imports and whatnot
-systemctl stop merlind > /dev/null || :
-
-# Verify that mysql-server is installed and running before executing sql scripts
-systemctl is-active %mysqld 2&>1 >/dev/null
-
-if [ $? -gt 0 ]; then
-  echo "Attempting to start %mysqld..."
-  systemctl start %mysqld
-  if [ $? -gt 0 ]; then
-    echo "Abort: Failed to start %mysqld."
-    exit 1
-  fi
-fi
-
-if ! mysql -umerlin -pmerlin merlin -e 'show tables' > /dev/null 2>&1; then
-    mysql -uroot -e "CREATE DATABASE IF NOT EXISTS merlin"
-    mysql -uroot -e "GRANT ALL ON merlin.* TO merlin@localhost IDENTIFIED BY 'merlin'"
-fi
-%_libdir/merlin/install-merlin.sh
-
 systemctl enable merlind.service
-
-# If mysql-server is running _or_ this is an upgrade
-# we import logs
-if [ $1 -eq 2 ]; then
-  mon log import --incremental > /dev/null 2>&1 || :
-  mon log import --only-notifications --incremental > /dev/null 2>&1 || :
-fi
-
-sed --follow-symlinks -i \
-    -e 's#pidfile =.*$#pidfile = /var/run/merlin/merlin.pid;#' \
-    -e 's#log_file =.*neb\.log;$#log_file = %{_localstatedir}/log/merlin/neb.log;#' \
-    -e 's#log_file =.*daemon\.log;$#log_file = %{_localstatedir}/log/merlin/daemon.log;#' \
-    -e 's#ipc_socket =.*$#ipc_socket = /var/lib/merlin/ipc.sock;#' \
-    %mod_path/merlin.conf
 
 # chown old cached nodesplit data, so it can be deleted
 chown -R %daemon_user:%daemon_group %_localstatedir/cache/merlin
 
-# restart all daemons
-for daemon in merlind nrpe; do
-    systemctl restart $daemon
-done
-
 # Create operator group for use in sudoers
 getent group %operator_group > /dev/null || groupadd %operator_group
+
+# Restart merlind to pick up the new binary. In managed (Ansible)
+# deployments, the playbook masks merlind before install so this
+# restart is a no-op — the playbook handles the restart sequence
+# in launch.yml to avoid ABI mismatch between the in-memory
+# merlin.so (loaded by naemon) and the on-disk merlind binary.
+# For standalone installs, this restart is the right thing to do.
+systemctl restart merlind || :
 
 %preun -n monitor-merlin
 if [ $1 -eq 0 ]; then
