@@ -195,8 +195,10 @@ cp cukemerlin %buildroot/%_bindir/cukemerlin
 cp -r apps/tests %buildroot/usr/share/merlin/app-tests
 
 
-mkdir -p %buildroot%_sysconfdir/nrpe.d
-cp nrpe-merlin.cfg %buildroot%_sysconfdir/nrpe.d
+# nrpe-merlin.cfg intentionally NOT installed. The commands it defines
+# reference /opt/plugins/ paths from the upstream op5 Monitor distribution
+# that don't exist in our environment. Our naemon/merlin NRPE checks are
+# deployed via Ansible in check_naemon.cfg instead.
 
 %{__install} -D -m 644 merlind.service %{buildroot}%{_unitdir}/merlind.service
 # Ensure oconf dir exists
@@ -249,7 +251,6 @@ systemctl restart naemon || :
 %_bindir/merlind
 %_libdir/merlin/install-merlin.sh
 %_sysconfdir/logrotate.d/merlin
-%_sysconfdir/nrpe.d/nrpe-merlin.cfg
 %{_unitdir}/merlind.service
 %attr(-, %daemon_user, %daemon_group) %dir %_localstatedir/lib/merlin
 %attr(775, %daemon_user, %daemon_group) %dir %_localstatedir/lib/merlin/binlogs
@@ -302,7 +303,6 @@ systemctl restart naemon || :
 %_bindir/merlind
 %_libdir/merlin/install-merlin.sh
 %_sysconfdir/logrotate.d/merlin
-%_sysconfdir/nrpe.d/nrpe-merlin.cfg
 %attr(-, %daemon_user, %daemon_group) %dir %_localstatedir/lib/merlin
 %attr(775, %daemon_user, %daemon_group) %dir %_localstatedir/lib/merlin/binlogs
 %attr(-, %daemon_user, %daemon_group) %dir %_localstatedir/log/merlin
