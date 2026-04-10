@@ -223,8 +223,8 @@ getent group %operator_group > /dev/null || groupadd %operator_group
 # Restart merlind to pick up the new binary. In managed (Ansible)
 # deployments, the playbook masks merlind before install so this
 # restart is a no-op — the playbook handles the restart sequence
-# in launch.yml to avoid ABI mismatch between the in-memory
-# merlin.so (loaded by naemon) and the on-disk merlind binary.
+# to avoid ABI mismatch between the in-memory merlin.so (loaded
+# by naemon) and the on-disk merlind binary.
 # For standalone installs, this restart is the right thing to do.
 systemctl restart merlind || :
 
@@ -234,8 +234,10 @@ if [ $1 -eq 0 ]; then
 fi
 
 %postun -n monitor-merlin
-# nrpe restart removed — nrpe picks up config changes on reload,
-# and the merlin package uninstall doesn't require an nrpe bounce.
+# Intentionally empty — the nrpe restart that was here was removed
+# because nrpe picks up config changes on reload and the merlin
+# package uninstall doesn't require an nrpe bounce.
+:
 
 %post -n monitor-merlin
 systemctl restart naemon || :
