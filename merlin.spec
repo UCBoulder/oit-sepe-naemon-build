@@ -20,7 +20,7 @@
 Summary: The merlin daemon is a multiplexing event-transport program
 Name: merlin
 Version: 2024.10.14
-Release: 4
+Release: 5
 License: GPLv2
 URL: https://github.com/ITRS-Group/monitor-merlin/
 Source0: https://github.com/ITRS-Group/monitor-merlin/archive/refs/tags/v%{version}.tar.gz
@@ -38,11 +38,7 @@ Requires: libaio
 Requires: merlin-apps >= %version
 Requires: monitor-merlin
 Requires: naemon-core
-Requires: mariadb-server
 Requires: glib2
-Requires: nrpe
-Requires: libdbi
-Requires: libdbi-dbd-mysql
 Requires: libsodium
 Requires: systemd
 BuildRequires: libsodium-devel
@@ -86,7 +82,6 @@ slim version that installs fewer dependencies.
 %package -n monitor-merlin
 Summary: A Nagios module designed to communicate with the Merlin daemon
 Requires: naemon-core, merlin = %version-%release
-Requires: mariadb-server
 Requires: systemd
 
 %description -n monitor-merlin
@@ -106,19 +101,7 @@ merlin daemon, which then takes appropriate action.
 %package apps
 Summary: Applications used to set up and aid a merlin/ninja installation
 Requires: rsync
-Requires: mariadb-server
-%if 0%{?suse_version}
-Requires: libdbi1
-Requires: python-mysql
-%else
-%if 0%{?rhel} >= 8
-Requires: python2-PyMySQL
-%else
-Requires: MySQL-python
-%endif
-Requires: libdbi
-%endif
-requires: systemd
+Requires: systemd
 Requires: sudo
 Requires: openssh-server
 Requires: naemon-livestatus
@@ -240,7 +223,11 @@ fi
 :
 
 %post -n monitor-merlin
-systemctl restart naemon || :
+# Intentionally empty — in managed (Ansible) deployments, the playbook
+# handles the naemon restart sequence to avoid ABI mismatch. The
+# unconditional restart that was here caused unnecessary naemon bounces
+# on every monitor-merlin upgrade.
+:
 
 %files
 %defattr(-,root,root)
@@ -250,7 +237,7 @@ systemctl restart naemon || :
 %mod_path/merlind
 %_bindir/merlind
 %_libdir/merlin/install-merlin.sh
-%_sysconfdir/logrotate.d/merlin
+%config(noreplace) %_sysconfdir/logrotate.d/merlin
 %{_unitdir}/merlind.service
 %attr(-, %daemon_user, %daemon_group) %dir %_localstatedir/lib/merlin
 %attr(775, %daemon_user, %daemon_group) %dir %_localstatedir/lib/merlin/binlogs
@@ -302,7 +289,7 @@ systemctl restart naemon || :
 %mod_path/merlind
 %_bindir/merlind
 %_libdir/merlin/install-merlin.sh
-%_sysconfdir/logrotate.d/merlin
+%config(noreplace) %_sysconfdir/logrotate.d/merlin
 %attr(-, %daemon_user, %daemon_group) %dir %_localstatedir/lib/merlin
 %attr(775, %daemon_user, %daemon_group) %dir %_localstatedir/lib/merlin/binlogs
 %attr(-, %daemon_user, %daemon_group) %dir %_localstatedir/log/merlin
@@ -342,6 +329,11 @@ systemctl restart naemon || :
 rm -rf %buildroot
 
 %changelog
+* Sun Apr 27 2026 Eric Schoeller <eric.schoeller@colorado.edu>
+- SEPE-1064: Mark logrotate config as %config(noreplace)
+- Remove unnecessary Requires: mariadb-server, nrpe, libdbi, libdbi-dbd-mysql, python2-PyMySQL
+- Remove unconditional naemon restart from %post -n monitor-merlin
+- Bump Release to 5
 * Thu Apr 09 2026 Eric Schoeller <eric.schoeller@colorado.edu>
 - SEPE-1064: Remove dead code from %post (DB, log import, sed, nrpe restart)
 - Stop installing nrpe-merlin.cfg (references non-existent /opt/plugins/ paths)
