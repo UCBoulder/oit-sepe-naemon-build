@@ -35,7 +35,7 @@ Patch0: merlin-0001-check_timeout-naemon-1.5.1.patch
 
 BuildRoot: %{_tmppath}/monitor-%{name}-%{version}
 Requires: libaio
-Requires: merlin-apps >= %version
+Requires: merlin-apps = %{version}-%{release}
 Requires: monitor-merlin
 Requires: naemon-core
 Requires: glib2
@@ -61,7 +61,7 @@ data into a variety of databases, using libdbi.
 %package slim
 Summary: Slim version of the merlin daemon
 Requires: libaio
-Requires: merlin-apps-slim >= %version
+Requires: merlin-apps-slim = %{version}-%{release}
 Requires: glib2
 BuildRequires: naemon-devel
 BuildRequires: python39
@@ -203,13 +203,12 @@ chown -R %daemon_user:%daemon_group %_localstatedir/cache/merlin
 # Create operator group for use in sudoers
 getent group %operator_group > /dev/null || groupadd %operator_group
 
-# Restart merlind to pick up the new binary. In managed (Ansible)
-# deployments, the playbook masks merlind before install so this
-# restart is a no-op — the playbook handles the restart sequence
-# to avoid ABI mismatch between the in-memory merlin.so (loaded
-# by naemon) and the on-disk merlind binary.
-# For standalone installs, this restart is the right thing to do.
-systemctl restart merlind || :
+# In managed (Ansible) deployments, the playbook handles the merlind
+# restart sequence to avoid ABI mismatch. For standalone RPM upgrades,
+# only restart merlind when it is already running.
+if command -v systemctl >/dev/null 2>&1 && systemctl -q is-active merlind.service; then
+    systemctl try-restart merlind.service || :
+fi
 
 %preun -n monitor-merlin
 if [ $1 -eq 0 ]; then
@@ -223,11 +222,13 @@ fi
 :
 
 %post -n monitor-merlin
-# Intentionally empty — in managed (Ansible) deployments, the playbook
-# handles the naemon restart sequence to avoid ABI mismatch. The
-# unconditional restart that was here caused unnecessary naemon bounces
-# on every monitor-merlin upgrade.
-:
+# In managed (Ansible) deployments, the playbook handles the naemon
+# restart sequence to avoid ABI mismatch. For standalone RPM upgrades,
+# only restart naemon when it is already running so updated merlin.so
+# is picked up without starting a stopped service.
+if command -v systemctl >/dev/null 2>&1 && systemctl -q is-active naemon.service; then
+    systemctl try-restart naemon.service || :
+fi
 
 %files
 %defattr(-,root,root)
@@ -329,7 +330,7 @@ fi
 rm -rf %buildroot
 
 %changelog
-* Sun Apr 27 2026 Eric Schoeller <eric.schoeller@colorado.edu>
+* Mon Apr 28 2026 Eric Schoeller <eric.schoeller@colorado.edu>
 - SEPE-1064: Mark logrotate config as %config(noreplace)
 - Remove unnecessary Requires: mariadb-server, nrpe, libdbi, libdbi-dbd-mysql, python2-PyMySQL
 - Remove unconditional naemon restart from %post -n monitor-merlin
